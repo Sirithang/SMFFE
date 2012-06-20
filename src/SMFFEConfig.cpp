@@ -95,6 +95,7 @@ SMFFEConfig::SMFFEConfig(void)
 
 	mPurcentageDamageTakenUltra = stringToFloat(mDatas["ultraReceivePurcentage"]);
 	mPurcentageDamageGivenUltra = stringToFloat(mDatas["ultraDegatPurcentage"]);
+	mPurcentageDamageTakenUltraFromUltra = stringToFloat(mDatas["ultraReceiveByUltraPurcentage"]);
 }
 
 
@@ -286,7 +287,7 @@ void SMFFEConfig::saveKeyboardMapping()
 	CIniFile::SetValue("HP", intToString(mKeyBoardMapping[C_HP]), "keyboard", mFilename);
 	CIniFile::SetValue("LK", intToString(mKeyBoardMapping[C_LK]), "keyboard", mFilename);
 	CIniFile::SetValue("HK", intToString(mKeyBoardMapping[C_HK]), "keyboard", mFilename);
-	CIniFile::SetValue("START", intToString(mKeyBoardMapping[START]), "keyboard", mFilename);
+	CIniFile::SetValue("START", intToString(mKeyBoardMapping[START]), "keyboard", mFilename);	
 	CIniFile::SetValue("BACK", intToString(mKeyBoardMapping[BACK]), "keyboard", mFilename);
 }
 

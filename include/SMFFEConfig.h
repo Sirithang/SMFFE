@@ -30,15 +30,10 @@ protected:
 
 	float mPurcentageDamageTakenUltra;
 	float mPurcentageDamageGivenUltra;
+	float mPurcentageDamageTakenUltraFromUltra;
 
 	SMFFEConfig(void);
 	~SMFFEConfig(void);
-
-	void readKeyboardMapping();
-	void saveKeyboardMapping();
-
-	void readJoypadMapping();
-	void saveJoypadMapping();
 
 public:
 	static SMFFEConfig& instance() { return sInstance; }
@@ -54,6 +49,7 @@ public:
 
 	float getPurcentageGivenUltra() { return mPurcentageDamageGivenUltra; }
 	float getPurcentageTakenUltra() { return mPurcentageDamageTakenUltra; }
+	float getPurcentageTakenUltraFromUltra() { return mPurcentageDamageTakenUltraFromUltra; }
 
 	std::map<sf::String, sf::String>& getDatas() { return mDatas; }
 
@@ -64,6 +60,14 @@ public:
 
 	std::map<InputType, int>& getMappingForInput(CommandInput* pInput);
 
+	void setKeyboardMapping(std::map<InputType, int>& pMapping) { mKeyBoardMapping = pMapping; }
+	void setJoypaddMapping(int pIndex, std::map<InputType, int>& pMapping) { mJoypadMapping[pIndex] = pMapping; }
+
+	void saveKeyboardMapping();
+	void saveJoypadMapping();
+
+	void readKeyboardMapping();
+	void readJoypadMapping();
 
 //***** a BIT dirty, but stock here the value of different Player choosed thing for loading screen
 

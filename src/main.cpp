@@ -5,7 +5,7 @@
 #include "constants.h"
 
 #include "ScreenManager.h"
-#include "StartScreen.h"
+#include "SplashScreen.h"
 #include "CombatScreen.h"
 #include "SelectCharScreen.h"
 #include "Character.h"
@@ -22,6 +22,7 @@ int main()
     bool gIsRunning = true;
 
 	sf::RenderWindow win;
+	win.ShowMouseCursor(false);
 
 	if(SMFFEConfig::instance().isFullscreen())
 	{
@@ -39,7 +40,7 @@ int main()
 
 	//lManager.pushScreen(new SelectCharScreen());
 	//lManager.pushScreen(new CombatScreen());
-	lManager.pushScreen(new StartScreen());
+	lManager.pushScreen(new SplashScreen());
 	
 	lManager.loop();
 	

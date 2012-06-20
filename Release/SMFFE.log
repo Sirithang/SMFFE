@@ -1,0 +1,17 @@
+﻿Build started 20/06/2012 19:33:21.
+     1>Project "E:\Git\SMFFE\SMFFE.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Release\SMFFE.unsuccessfulbuild".
+       ClCompile:
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+         SMFFE.vcxproj -> E:\Git\SMFFE\.\bin\Release\SMFFE.exe
+       FinalizeBuildStatus:
+         Deleting file "Release\SMFFE.unsuccessfulbuild".
+         Touching "Release\SMFFE.lastbuildstate".
+     1>Done Building Project "E:\Git\SMFFE\SMFFE.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.13

@@ -12,6 +12,9 @@ OptionScreen::OptionScreen(Player* pPlayer, sf::Music* pMusic)
 {
 	mBackground.setPosition(mBackground.getSFSprite().GetSize() * -0.5f);
 
+	//SMFFEConfig::instance().readJoypadMapping();
+	//SMFFEConfig::instance().readKeyboardMapping();
+
 	mNavigationBuffer.LoadFromFile("data/screens/SelectCharScreen/navigation.ogg");
 	mValidationBuffer.LoadFromFile("data/screens/SelectCharScreen/validation.ogg");
 
@@ -25,7 +28,7 @@ OptionScreen::OptionScreen(Player* pPlayer, sf::Music* pMusic)
 	mCurrentValidation = 0;
 
 	//**
-	mNbSelection  = 7;
+	mNbSelection  = 9;
 	mCurrentSelection = 0;
 
 	mFont.LoadFromFile("data/font/graph_35_pix.ttf");
@@ -94,6 +97,16 @@ OptionScreen::OptionScreen(Player* pPlayer, sf::Music* pMusic)
 	mHK.SetColor(sf::Color::White);
 	mHK.SetPosition(mLK.GetPosition() + sf::Vector2f(0, 50));
 
+	mStart.SetFont(mFont);
+	mStart.SetScale(0.7f, 0.7f);
+	mStart.SetColor(sf::Color::White);
+	mStart.SetPosition(mHK.GetPosition() + sf::Vector2f(0, 50));
+
+	mBack.SetFont(mFont);
+	mBack.SetScale(0.7f, 0.7f);
+	mBack.SetColor(sf::Color::White);
+	mBack.SetPosition(mStart.GetPosition() + sf::Vector2f(0, 50));
+
 	mMappingActual = SMFFEConfig::instance().getMappingForInput(mPlayer->getInput());
 	mWaitingForKey = false;
 	moveSelector();
@@ -117,7 +130,7 @@ void OptionScreen::update()
 		return;
 	}
 
-	if(mPlayer->getInput()->getInputDown(C_HK) || mPlayer->getInput()->getInputDown(BACK) || (mPlayer->getInput()->getInputDown(START) && mCurrentSelection < 3))
+	if(mPlayer->getInput()->getInputDown(C_HK) || mPlayer->getInput()->getInputDown(BACK) ||  (mCurrentSelection < 3 && mPlayer->getInput()->getInputDown(START)))
 	{
 		mManager->popScreen();
 		return;
@@ -136,10 +149,6 @@ void OptionScreen::update()
 		moveSelector();
 	}
 
-	handleInput();
-
-	
-	
 	mFullscreen.SetString(sf::String("Fullscreen - ") + (SMFFEConfig::instance().isFullscreen()?sf::String("Yes"):sf::String("No")));
 
 	mResolution.SetString(sf::String("Resolution (windowed only) - ") + intToString(SMFFEConfig::instance().getWinWidth())
@@ -152,6 +161,8 @@ void OptionScreen::update()
 		mHP.SetString(sf::String("HP - ") + getNameOfKey((sf::Keyboard::Key)mMappingActual[C_HP]));
 		mLK.SetString(sf::String("LK - ") + getNameOfKey((sf::Keyboard::Key)mMappingActual[C_LK]));
 		mHK.SetString(sf::String("HK - ") + getNameOfKey((sf::Keyboard::Key)mMappingActual[C_HK]));
+		mStart.SetString(sf::String("Start - ") + getNameOfKey((sf::Keyboard::Key)mMappingActual[START]));
+		mBack.SetString(sf::String("Back - ") + getNameOfKey((sf::Keyboard::Key)mMappingActual[BACK]));
 	}
 	else
 	{
@@ -159,8 +170,11 @@ void OptionScreen::update()
 		mHP.SetString(sf::String("HP - ") + intToString(mMappingActual[C_HP]));
 		mLK.SetString(sf::String("LK - ") + intToString(mMappingActual[C_LK]));
 		mHK.SetString(sf::String("HK - ") + intToString(mMappingActual[C_HK]));
+		mStart.SetString(sf::String("Start - ") + intToString(mMappingActual[START]));
+		mBack.SetString(sf::String("Back - ") + intToString(mMappingActual[BACK]));
 	}
 
+	handleInput();
 }
 
 //--------------------------------------------------------------
@@ -179,6 +193,8 @@ void OptionScreen::draw(sf::RenderTarget* pTarget)
 	pTarget->Draw(mHP);
 	pTarget->Draw(mLK);
 	pTarget->Draw(mHK);
+	pTarget->Draw(mStart);
+	pTarget->Draw(mBack);
 
 	mFlecheSelection.draw(pTarget);
 }
@@ -188,7 +204,7 @@ void OptionScreen::draw(sf::RenderTarget* pTarget)
 void OptionScreen::moveSelector()
 {
 	float lOffset = 45;
-	float lOffsetY = 14;
+	float lOffsetY = 20;
 
 	mNavigation[mCurrentNavigation].Play();
 	mCurrentNavigation = (mCurrentNavigation + 1)%3;
@@ -216,6 +232,12 @@ void OptionScreen::moveSelector()
 	case 6:
 		mFlecheSelection.setPosition(sf::Vector2f(SMFFEConfig::instance().getViewWidth() * -0.5f + lOffset, mHK.GetPosition().y - lOffsetY));
 		break;
+	case 7:
+		mFlecheSelection.setPosition(sf::Vector2f(SMFFEConfig::instance().getViewWidth() * -0.5f + lOffset, mStart.GetPosition().y - lOffsetY));
+		break;
+	case 8:
+		mFlecheSelection.setPosition(sf::Vector2f(SMFFEConfig::instance().getViewWidth() * -0.5f + lOffset, mBack.GetPosition().y - lOffsetY));
+		break;
 	default:
 		break;
 	}
@@ -225,6 +247,8 @@ void OptionScreen::moveSelector()
 
 void OptionScreen::handleInput()
 {
+	mPlayer->getInput()->pollData();
+
 	if(mCurrentSelection == 0)
 	{
 		if(mPlayer->getInput()->getInputDown(C_LP))
@@ -282,7 +306,7 @@ void OptionScreen::handleInput()
 	}
 	else if(mCurrentSelection >= 3 && mCurrentSelection < mNbSelection)
 	{
-		if(mPlayer->getInput()->getInputDown(START))
+		if(mPlayer->getInput()->getInputDown(C_LP))
 		{
 			mWaitingForKey = true;
 
@@ -294,15 +318,23 @@ void OptionScreen::handleInput()
 				break;
 			case 4:
 				mKeyWaited = C_HP;
-				mLP.SetString("HP -");
+				mHP.SetString("HP -");
 				break;
 			case 5:
 				mKeyWaited = C_LK;
-				mLP.SetString("LK -");
+				mLK.SetString("LK -");
 				break;
 			case 6:
 				mKeyWaited = C_HK;
-				mLP.SetString("HK -");
+				mHK.SetString("HK -");
+				break;
+			case 7:
+				mKeyWaited = START;
+				mStart.SetString("START -");
+				break;
+			case 8:
+				mKeyWaited = BACK;
+				mBack.SetString("BACK -");
 				break;
 			default:
 				break;
@@ -318,32 +350,72 @@ void OptionScreen::handleInput()
 
 void OptionScreen::WaitForKey()
 {
+	int num = mPlayer->getInput()->getNumber();
 
-	if(!sf::Keyboard::IsKeyPressed((sf::Keyboard::Key)mMappingActual[START]))
-		mTimeSinceLastPushed = -10;
+	//mTimeSinceLastPushed -= Time::deltaTime();
 
 	if(mPlayer->getInput()->getType() == "keyboard")
 	{
+		if(!sf::Keyboard::IsKeyPressed((sf::Keyboard::Key)mMappingActual[C_LP]))
+			mTimeSinceLastPushed = -10;
+
 		for(int i = 0; i < sf::Keyboard::KeyCount; i++)
 		{
 			if(sf::Keyboard::IsKeyPressed((sf::Keyboard::Key)i))
 			{
+				if( i == mMappingActual[C_LP] && mTimeSinceLastPushed > 0)
+					continue;
+
+				bool lContinue = false;
+				std::map<InputType, int>::iterator lIt = mMappingActual.begin();
+				while(lIt != mMappingActual.end())
+				{
+					if(lIt->second == i)
+					{
+						lIt->second = mMappingActual[mKeyWaited];
+						break;
+					}
+
+					lIt++;
+				}
+
 				mMappingActual[mKeyWaited] = i;
 				mWaitingForKey = false;
+				SMFFEConfig::instance().setKeyboardMapping(mMappingActual);
+				SMFFEConfig::instance().saveKeyboardMapping();
 				return;
 			}
 		}
 	}
 	else if(mPlayer->getInput()->getType() == "joystick")
 	{
-		int num = mPlayer->getInput()->getNumber();
+		if(!sf::Joystick::IsButtonPressed(num, mMappingActual[C_LP]))
+			mTimeSinceLastPushed = -10;
 
 		for(int i = 0; i < sf::Joystick::GetButtonCount(num); i++)
 		{
 			if(sf::Joystick::IsButtonPressed(num, i))
 			{
+				if( i == mMappingActual[C_LP] && mTimeSinceLastPushed > 0)
+					continue;
+
+				bool lContinue = false;
+				std::map<InputType, int>::iterator lIt = mMappingActual.begin();
+				while(lIt != mMappingActual.end())
+				{
+					if(lIt->second == i)
+					{
+						lIt->second = mMappingActual[mKeyWaited];
+						break;
+					}
+
+					lIt++;
+				}
+
 				mMappingActual[mKeyWaited] = i;
 				mWaitingForKey = false;
+				SMFFEConfig::instance().setJoypaddMapping(num, mMappingActual);
+				SMFFEConfig::instance().saveJoypadMapping();
 				return;
 			}
 		}

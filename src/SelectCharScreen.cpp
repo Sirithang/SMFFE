@@ -214,8 +214,8 @@ SelectCharScreen::SelectCharScreen(Player* pFirstPlayer, Player* pSecondPlayer, 
 	mState1 = SELECT_CHAR;
 	mState2 = SELECT_CHAR;
 
-	mUltraCasu1 = false;
-	mUltraCasu2 = false;
+	mUltraCasu1 = true;
+	mUltraCasu2 = true;
 
 	mFond1 = mListTextureFond[mCurrentPosition1];
 	mFond2 = mListTextureFond[mCurrentPosition2];
@@ -543,7 +543,7 @@ void SelectCharScreen::selectUltra()
 			//mPlayer1->setCharacter(mPlayer1Select, !mUltraCasu1);
 
 			SMFFEConfig::instance().sChar1 = mPlayer1Select;
-			SMFFEConfig::instance().sCasu1 = !mUltraCasu1;
+			SMFFEConfig::instance().sCasu1 = mUltraCasu1;
 
 			if(mTrainingMode)
 			{
@@ -592,7 +592,7 @@ void SelectCharScreen::selectUltra()
 			else
 			{
 				SMFFEConfig::instance().sChar2 = mPlayer2Select;
-				SMFFEConfig::instance().sCasu2 = !mUltraCasu2;
+				SMFFEConfig::instance().sCasu2 = mUltraCasu2;
 
 				//mPlayer2->setCharacter(mPlayer2Select, !mUltraCasu2);
 			}

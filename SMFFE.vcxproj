@@ -34,6 +34,7 @@
     <ClCompile Include="src\SelectCharScreen.cpp" />
     <ClCompile Include="src\SMFFEConfig.cpp" />
     <ClCompile Include="src\SMFFETime.cpp" />
+    <ClCompile Include="src\SplashScreen.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\StageScreen.cpp" />
     <ClCompile Include="src\StartScreen.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="include\SelectCharScreen.h" />
     <ClInclude Include="include\SMFFEConfig.h" />
     <ClInclude Include="include\SMFFETime.h" />
+    <ClInclude Include="include\SplashScreen.h" />
     <ClInclude Include="include\Sprite.h" />
     <ClInclude Include="include\StageScreen.h" />
     <ClInclude Include="include\StartScreen.h" />
@@ -129,6 +131,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>ext\lib\Release</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-main.lib;sfml-system.lib;sfml-network.lib;sfml-audio.lib;sfml-graphics.lib;sfml-window.lib;fmod_event.lib;fmodex_vc.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -21,12 +21,17 @@ Character::Character(const sf::Vector2f pPosition, Player* pPlayer, bool pCasu)
 		mUltraUpperJaugeSprite("data/GUI/HUD/Barre d'ultra vide.png", sf::Vector2f(0,0)),
 		mUltraJaugeSprite("data/GUI/HUD/Barre d'ultra pleine.png", sf::Vector2f(0,0)),
 		mGuardSprite("data/GUI/HUD/Barre de garde.png", sf::Vector2f(0,0)),
+		mRoundEmpty("data/GUI/HUD/victory_empty.png", sf::Vector2f(0,0)),
+		mRoundFull("data/GUI/HUD/victory_full.png", sf::Vector2f(0,0)),
 		mGrosCasuMode(pCasu)
 {
 	mPurcentageLoaded = 0;
 	
 	mPlayer = pPlayer;
 	mSpeed = 100.0f;
+
+	mRoundOne = &mRoundEmpty;
+	mRoundTwo = &mRoundEmpty;
 
 	mGrounded = false;
 
@@ -119,7 +124,6 @@ Character::Character(const sf::Vector2f pPosition, Player* pPlayer, bool pCasu)
 	mTimerBeforeGuardAgain = 0;
 
 	mNumberRoundWin = 0;
-
 }
 
 //-----------------------------------------------------
@@ -131,6 +135,23 @@ Character::~Character(void)
 
 void Character::update()
 {
+	switch(mNumberRoundWin)
+	{
+	case 0:
+		mRoundOne = &mRoundEmpty;
+		mRoundTwo = &mRoundEmpty;
+		break;
+	case 1:
+		mRoundOne = &mRoundFull;
+		mRoundTwo = &mRoundEmpty;
+		break;
+	case 2:
+		mRoundOne = &mRoundFull;
+		mRoundTwo = &mRoundFull;
+		break;
+	default:
+		break;
+	}
 
 	if(mTrainingMode)
 	{
@@ -149,7 +170,7 @@ void Character::update()
 
 		while(mUltraTimeSinceLastHit > mUltraTimeBetweenHit)
 		{
-			mOther->takeDamage(mUltraDegatByHit, 1.0f);
+			mOther->takeDamage(mUltraDegatByHit, 1.0f, true);
 			mUltraTimeSinceLastHit -= mUltraTimeBetweenHit;
 			mUltraNbHitDone++;
 		}
@@ -543,7 +564,7 @@ void Character::velocityFromInput()
 		mVelocity.x -= (lLast == UPLEFT ? 1.0f : 0.0f) * mSpeed * 2 * Time::deltaTime();
 		mVelocity.x += (lLast == UPRIGHT ? 1.0f : 0.0f) * mSpeed * 2 * Time::deltaTime();
 
-		mVelocity.y -= (lLast == UP || lLast == UPLEFT || lLast == UPRIGHT ? 1.0f : 0.0f) * 15;
+		mVelocity.y -= (lLast == UP || lLast == UPLEFT || lLast == UPRIGHT ? 1.0f : 0.0f) * 19;
 	}
 
 	
@@ -754,7 +775,22 @@ void Character::draw(sf::RenderTarget* pTarget)
 		mUltraButtonDisplayed->draw(pTarget);
 	}
 
+	if(mPlayer->isLeftSide())
+	{
+		mRoundOne->setPosition(sf::Vector2f( SMFFEConfig::instance().getViewWidth() *0.5f - 190, 90));
+		mRoundOne->draw(pTarget);
 
+		mRoundTwo->setPosition(sf::Vector2f( SMFFEConfig::instance().getViewWidth() *0.5f - 150, 90));
+		mRoundTwo->draw(pTarget);
+	}
+	else
+	{
+		mRoundOne->setPosition(sf::Vector2f( SMFFEConfig::instance().getViewWidth() *0.5f + 100, 90));
+		mRoundOne->draw(pTarget);
+
+		mRoundTwo->setPosition(sf::Vector2f( SMFFEConfig::instance().getViewWidth() *0.5f + 140, 90));
+		mRoundTwo->draw(pTarget);
+	}
 }
 
 //----------------------------------------------------
@@ -803,7 +839,7 @@ void Character::madeContact()
 
 //----------------------------------------------------------
 
-void Character::takeDamage(float pAmount, float pStunTime)
+void Character::takeDamage(float pAmount, float pStunTime, bool pFromUltra)
 {
 	mHit = true;
 	play("hit", true, true);
@@ -811,7 +847,10 @@ void Character::takeDamage(float pAmount, float pStunTime)
 	mPV -= pAmount;
 	mStunHit = pStunTime;
 
-	mUltraJauge = std::min(mUltraJauge + pAmount * SMFFEConfig::instance().getPurcentageTakenUltra(), mUltraJaugeMax);
+	if(!pFromUltra)
+		mUltraJauge = std::min(mUltraJauge + pAmount * SMFFEConfig::instance().getPurcentageTakenUltra(), mUltraJaugeMax);
+	else
+		mUltraJauge = std::min(mUltraJauge + pAmount * SMFFEConfig::instance().getPurcentageTakenUltraFromUltra(), mUltraJaugeMax);
 
 	mAssociatedSprite.push_back(new TimedSprite(mLastCollisionResult.mPosition, 1.0f));
 	/*mAssociatedSprite.back()->setPosition(	mLastCollisionResult.mPosition

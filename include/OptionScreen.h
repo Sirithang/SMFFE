@@ -25,6 +25,8 @@ protected:
 	sf::Text mHP;
 	sf::Text mLK;
 	sf::Text mHK;
+	sf::Text mStart;
+	sf::Text mBack;
 
 	Sprite	mFlecheSelection;
 	int		mCurrentSelection;

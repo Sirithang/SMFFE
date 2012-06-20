@@ -61,7 +61,10 @@ protected:
 	std::vector<Sprite*> mAssociatedSprite;
 
 	int				mNumberRoundWin;
-
+	Sprite*			mRoundOne;
+	Sprite*			mRoundTwo;
+	Sprite			mRoundEmpty;
+	Sprite			mRoundFull;
 	
 
 	float			mSpeed;
@@ -129,7 +132,7 @@ public:
 	void draw(sf::RenderTarget* pTarget);
 
 	void madeContact();
-	void takeDamage(float pAmount, float pStunTime);
+	void takeDamage(float pAmount, float pStunTime, bool pFromUltra = false);
 
 	void guard();
 
