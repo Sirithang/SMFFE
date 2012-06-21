@@ -45,7 +45,7 @@ void ScreenManager::loop()
 		mWindow->Display();
     }
 
-	std::cout<<"Exiting Loop"<<std::endl;
+	//std::cout<<"Exiting Loop"<<std::endl;
 
 	list<AScreen*>::iterator lIt = mScreenList.begin();
 	while(lIt != mScreenList.end())

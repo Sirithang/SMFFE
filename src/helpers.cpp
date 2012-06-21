@@ -91,7 +91,7 @@ void toDebugLog(const sf::String &pStr)
 	lfile<<pStr.ToAnsiString()<<std::endl;
 	lfile.close();
 #else
-	std::cout<<pStr.ToAnsiString()<<std::endl;
+	//std::cout<<pStr.ToAnsiString()<<std::endl;
 #endif
 }
 

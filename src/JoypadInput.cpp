@@ -54,7 +54,7 @@ void JoypadInput::pollImplementation()
 	{
 		float lAngle = std::atan2f(Joystick::GetAxisPosition(mNumber, Joystick::PovY) , Joystick::GetAxisPosition(mNumber, Joystick::PovX));
 
-		std::cout<<lAngle<<std::endl;
+		//std::cout<<lAngle<<std::endl;
 
 		if((lAngle < 0.5f || lAngle > 2.6f))
 		{

@@ -37,14 +37,14 @@ int main()
 
 	win.SetFramerateLimit(60);
 	ScreenManager lManager(&win);
-
+	win.ShowMouseCursor(false);
 	//lManager.pushScreen(new SelectCharScreen());
 	//lManager.pushScreen(new CombatScreen());
 	lManager.pushScreen(new SplashScreen());
 	
 	lManager.loop();
 	
-	std::cout<<"Quitting game"<<std::endl;
+	//std::cout<<"Quitting game"<<std::endl;
 
     return 0;
 }

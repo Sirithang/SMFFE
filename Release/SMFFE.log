@@ -1,12 +1,50 @@
-﻿Build started 20/06/2012 19:33:21.
+﻿Build started 21/06/2012 15:22:44.
      1>Project "E:\Git\SMFFE\SMFFE.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Touching "Release\SMFFE.unsuccessfulbuild".
+         Creating "Release\SMFFE.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         All outputs are up-to-date.
+         e:\VisualStudio200\VC\bin\CL.exe /c /I./ext/include /I./include /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt src\Animation.cpp
+         Animation.cpp
+     1>src\Animation.cpp(21): warning C4101: 'lImage' : variable locale non référencée
+     1>src\Animation.cpp(106): warning C4018: '<' : incompatibilité signed/unsigned
+     1>src\Animation.cpp(111): warning C4018: '<' : incompatibilité signed/unsigned
+     1>src\Animation.cpp(134): warning C4018: '>=' : incompatibilité signed/unsigned
+     1>src\Animation.cpp(158): warning C4244: 'argument' : conversion de 'const int' en 'float', perte possible de données
        Link:
-         All outputs are up-to-date.
+         e:\VisualStudio200\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\bin\Release\SMFFE.exe" /NOLOGO /LIBPATH:ext\lib\Release "sfml-main.lib" "sfml-system.lib" "sfml-network.lib" "sfml-audio.lib" "sfml-graphics.lib" "sfml-window.lib" fmod_event.lib fmodex_vc.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\SMFFE.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\Git\SMFFE\bin\Release\SMFFE.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\bin\Release\SMFFE.lib" /MACHINE:X86 Release\AnimatedSprite.obj
+         Release\Animation.obj
+         Release\AScreen.obj
+         Release\Character.obj
+         Release\CombatScreen.obj
+         Release\Combo.obj
+         Release\CommandInput.obj
+         Release\CreditScreen.obj
+         Release\helpers.obj
+         Release\IAInput.obj
+         Release\IniFile.obj
+         Release\JoypadInput.obj
+         Release\KeyboardInput.obj
+         Release\LoadingScreen.obj
+         Release\main.obj
+         Release\MenuScreen.obj
+         Release\OptionScreen.obj
+         Release\Player.obj
+         Release\Projectile.obj
+         Release\ScreenManager.obj
+         Release\SelectCharScreen.obj
+         Release\SMFFEConfig.obj
+         Release\SMFFETime.obj
+         Release\SplashScreen.obj
+         Release\Sprite.obj
+         Release\StageScreen.obj
+         Release\StartScreen.obj
+         Release\TimedSprite.obj
+         Génération de code en cours
+     1>e:\git\smffe\src\smffeconfig.cpp(326): warning C4715: 'SMFFEConfig::getMappingForInput' : les chemins de contrôle ne retournent pas tous une valeur
+         Fin de la génération du code
          SMFFE.vcxproj -> E:\Git\SMFFE\.\bin\Release\SMFFE.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:".\bin\Release\SMFFE.exe;#1" /manifest Release\SMFFE.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Release\SMFFE.unsuccessfulbuild".
          Touching "Release\SMFFE.lastbuildstate".
@@ -14,4 +52,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.13
+Time Elapsed 00:00:06.59

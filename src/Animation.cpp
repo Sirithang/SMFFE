@@ -148,7 +148,7 @@ void Animation::update()
 	}
 
 
-	mSprite->mSprite->SetTexture(*mListTexture.at(mCurrentFrame), true);
+	mSprite->mSprite->SetTexture(*mListTexture.at(mCurrentFrame), false);
 
 	if(mMaskList.size() > 0)
 		mSprite->mCollisionMask = mMaskList.at(mCurrentFrame);
